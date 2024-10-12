@@ -14,8 +14,19 @@
         <Entry 
         Text="{Binding NewToDoTextValue}" 
         Placeholder="Enter a todo"
-       
+        ReturnCommand="{Binding AddNewToDoCommand}"
         />
+        <ListView ItemsSource="{Binding ToDoItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                            <Label Text="{Binding Text}" FontSize="30" Padding="1"></Label>
+                    </ViewCell>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+        </ListView>
     </StackLayout>
 
 </ContentPage>

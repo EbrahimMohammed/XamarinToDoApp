@@ -9,6 +9,12 @@ namespace XamarinToDoApp.Models
         public string Text { get; set; }
 
         public bool Complete { get; set; }
-       
+
+        public ToDoItem(string text, bool compelte)
+        {
+            Text = text;
+            Complete = compelte;
+        }
+
     }
 }
