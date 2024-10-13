@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,7 +9,7 @@ using XamarinToDoApp.Models;
 
 namespace XamarinToDoApp.ViewModels
 {
-    public class ToDoListViewModel
+    public class ToDoListViewModel : INotifyPropertyChanged
     {
 
 
@@ -19,12 +20,26 @@ namespace XamarinToDoApp.ViewModels
             ToDoItems = new ObservableCollection<ToDoItem>();
         }
 
-        public string NewToDoTextValue { get; set; }
-
+        private string _newToDoTextValue;
+        public string NewToDoTextValue
+        {
+            get => _newToDoTextValue;
+            set
+            {
+                if (_newToDoTextValue != value)
+                {
+                    _newToDoTextValue = value;
+                    OnPropertyChanged(nameof(NewToDoTextValue));
+                }
+            }
+        }
         public ICommand AddNewToDoCommand => new Command(AddNewToDoItem);
+
+
         void AddNewToDoItem()
         {
             ToDoItems.Add(new ToDoItem(NewToDoTextValue, false));
+            NewToDoTextValue = string.Empty; // Clear the Entry text
 
         }
 
@@ -35,6 +50,12 @@ namespace XamarinToDoApp.ViewModels
             ToDoItem itemToRemove = o as ToDoItem;
             ToDoItems.Remove(itemToRemove);
 
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
