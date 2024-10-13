@@ -16,16 +16,21 @@
         Placeholder="Enter a todo"
         ReturnCommand="{Binding AddNewToDoCommand}"
         />
-        <ListView ItemsSource="{Binding ToDoItems}">
+        <ListView x:Name="ToDoList" ItemsSource="{Binding ToDoItems}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                            <Label Text="{Binding Text}" FontSize="30" Padding="1"></Label>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="5">
+                            <Label Text="{Binding Text}" FontSize="20" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                            <ImageButton Source="delete.jpg"
+                                Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}"
+                                CommandParameter="{Binding .}"
+                                WidthRequest="30" HeightRequest="30" 
+                                HorizontalOptions="End" VerticalOptions="Center"/>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
-
             </ListView.ItemTemplate>
-
         </ListView>
     </StackLayout>
 

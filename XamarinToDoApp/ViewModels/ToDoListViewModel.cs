@@ -29,6 +29,15 @@ namespace XamarinToDoApp.ViewModels
         }
 
 
+        public ICommand RemoveToDoCommand => new Command(RemoveToDoItem);
+        void RemoveToDoItem(object o)
+        {
+            ToDoItem itemToRemove = o as ToDoItem;
+            ToDoItems.Remove(itemToRemove);
+
+        }
+
+
 
     }
 }
