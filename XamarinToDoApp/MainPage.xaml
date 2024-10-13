@@ -21,6 +21,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="5">
+                            <CheckBox IsChecked="{Binding Completed}"></CheckBox>
                             <Label Text="{Binding Text}" FontSize="20" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                             <ImageButton Source="delete.jpg"
                                 Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}"
