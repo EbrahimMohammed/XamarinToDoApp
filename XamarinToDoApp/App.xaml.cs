@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinToDoApp.Persistance;
+using XamarinToDoApp.ViewModels;
 
 namespace XamarinToDoApp
 {
@@ -8,6 +10,9 @@ namespace XamarinToDoApp
     {
         public App()
         {
+            var toDoItemStore = new SqlLiteToDoItemStore(DependencyService.Get<ISQLiteDb>());
+            ViewModel = new ToDoListViewModel(toDoItemStore);
+
             InitializeComponent();
 
             MainPage = new MainPage();
@@ -23,6 +28,12 @@ namespace XamarinToDoApp
 
         protected override void OnResume()
         {
+        }
+
+        public ToDoListViewModel ViewModel
+        {
+            get { return BindingContext as ToDoListViewModel; }
+            set { BindingContext = value; }
         }
     }
 }

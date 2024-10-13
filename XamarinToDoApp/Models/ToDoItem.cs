@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,8 @@ namespace XamarinToDoApp.Models
 {
     public class ToDoItem
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string Text { get; set; }
 
         public bool _Completed = false;
@@ -31,10 +34,9 @@ namespace XamarinToDoApp.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public ToDoItem(string text, bool compelte)
+        public ToDoItem()
         {
-            Text = text;
-            Completed = compelte;
+           
         }
 
     }

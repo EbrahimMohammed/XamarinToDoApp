@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XamarinToDoApp.Models;
+using XamarinToDoApp.Persistance;
 
 namespace XamarinToDoApp.ViewModels
 {
     public class ToDoListViewModel : INotifyPropertyChanged
     {
 
+        private IToDoItemStore _toDoItemStore;
 
-        public ObservableCollection<ToDoItem> ToDoItems { get; set; }
+
+        public ObservableCollection<ToDoItem> ToDoItems { get; private set; }
+        = new ObservableCollection<ToDoItem>();
+
+        public ToDoListViewModel(IToDoItemStore toDoItemStore)
+        {
+            _toDoItemStore = toDoItemStore;
+        }
 
         public ToDoListViewModel()
         {
-            ToDoItems = new ObservableCollection<ToDoItem>();
+            
         }
 
         private string _newToDoTextValue;
@@ -38,9 +49,10 @@ namespace XamarinToDoApp.ViewModels
 
         void AddNewToDoItem()
         {
-            ToDoItems.Add(new ToDoItem(NewToDoTextValue, false));
+            var toDoItem = new ToDoItem { Completed = false, Text = NewToDoTextValue };
             NewToDoTextValue = string.Empty; // Clear the Entry text
-
+            _toDoItemStore.Add(toDoItem);
+            ToDoItems.Add(toDoItem);
         }
 
 
@@ -49,6 +61,7 @@ namespace XamarinToDoApp.ViewModels
         {
             ToDoItem itemToRemove = o as ToDoItem;
             ToDoItems.Remove(itemToRemove);
+            _toDoItemStore.Delete(itemToRemove);
 
         }
 
@@ -59,6 +72,14 @@ namespace XamarinToDoApp.ViewModels
         }
 
 
+        public async Task LoadData()
+        {
 
+            var toDoItems = await _toDoItemStore.GetAll();
+            foreach (var toDoItem in toDoItems)
+                ToDoItems.Add(toDoItem);
+        }
+
+        
     }
 }
