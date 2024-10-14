@@ -80,6 +80,14 @@ namespace XamarinToDoApp.ViewModels
                 ToDoItems.Add(toDoItem);
         }
 
-        
+
+        public ICommand OnCheckChangedCommand => new Command<ToDoItem>(OnCheckedChanged);
+
+        private void OnCheckedChanged(ToDoItem item)
+        {
+            _toDoItemStore.Update(item);
+        }
+
+
     }
 }

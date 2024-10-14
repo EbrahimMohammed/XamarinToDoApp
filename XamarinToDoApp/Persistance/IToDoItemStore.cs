@@ -13,5 +13,6 @@ namespace XamarinToDoApp.Persistance
         
         Task Add(ToDoItem contact);
         Task Delete(ToDoItem contact);
+        Task Update(ToDoItem contact);
     }
 }

@@ -33,5 +33,11 @@ namespace XamarinToDoApp.Persistance
         {
             return await _connection.Table<ToDoItem>().ToListAsync();
         }
+
+        public async Task Update(ToDoItem toDoItem)
+        {
+            await _connection.UpdateAsync(toDoItem);
+        }
+
     }
 }
