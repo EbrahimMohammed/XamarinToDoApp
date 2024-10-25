@@ -10,12 +10,57 @@
         <local:ToDoListViewModel/>
 
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TodoInputStyle" TargetType="Entry">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="PlaceholderColor" Value="#A0A0A0"/>
+                <Setter Property="TextColor" Value="#2C2C2C"/>
+                <Setter Property="FontFamily" Value="{OnPlatform iOS='HelveticaNeue', Android='sans-serif-medium'}"/>
+                <Setter Property="Margin" Value="0,5"/>
+            </Style>
 
+            <Style x:Key="TodoTextStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{OnPlatform iOS='HelveticaNeue', Android='sans-serif'}"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="#2C2C2C"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+                <Setter Property="MaxLines" Value="2"/>     
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="LineHeight" Value="1.2"/>
+            </Style>
+            
+            <Style x:Key="DetailsButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F0F0F0"/>
+                <Setter Property="TextColor" Value="#007AFF"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderColor" Value="#007AFF"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F0F0F0"/>
+                <Setter Property="TextColor" Value="#FF3B30"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderColor" Value="#FF3B30"/>
+                <Setter Property="BorderWidth" Value="1"/>
+
+                <Setter Property="MinimumWidthRequest" Value="80"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
         <Entry 
         Text="{Binding NewToDoTextValue}" 
         Placeholder="Enter a todo"
         ReturnCommand="{Binding AddNewToDoCommand}"
+        Style="{StaticResource TodoInputStyle}" 
         />
         <ListView x:Name="ToDoList" ItemsSource="{Binding ToDoItems}" >
             <ListView.ItemTemplate>
@@ -30,16 +75,19 @@
                                 Color="Blue"
                                 TextFontSize="10"
                                 VerticalOptions="Center" />
-                            <Label Text="{Binding Text}" FontSize="20" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                            <Label Text="{Binding Text}"   
+                                   Style="{StaticResource TodoTextStyle}"/>
                             <Button 
-                        Text="Details" 
-                        Command="{Binding BindingContext.NavigateToDetailsCommand, Source={x:Reference ToDoList}}" 
-                        CommandParameter="{Binding .}" />
-                            <ImageButton Source="delete.jpg"
+                            Text="Details" 
+                            Command="{Binding BindingContext.NavigateToDetailsCommand, Source={x:Reference ToDoList}}" 
+                            CommandParameter="{Binding .}" 
+                            Style="{StaticResource DetailsButtonStyle}" />
+                            <Button 
+                                Text="Delete"
                                 Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}"
                                 CommandParameter="{Binding .}"
-                                WidthRequest="30" HeightRequest="30" 
-                                HorizontalOptions="End" VerticalOptions="Center"/>
+                                HorizontalOptions="End" VerticalOptions="Center"
+                                Style="{StaticResource DeleteButtonStyle}"        />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
