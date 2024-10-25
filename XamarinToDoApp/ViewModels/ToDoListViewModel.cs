@@ -74,7 +74,7 @@ namespace XamarinToDoApp.ViewModels
 
         public async Task LoadData()
         {
-
+            ToDoItems.Clear();
             var toDoItems = await _toDoItemStore.GetAll();
             foreach (var toDoItem in toDoItems)
                 ToDoItems.Add(toDoItem);
@@ -86,6 +86,17 @@ namespace XamarinToDoApp.ViewModels
         private void OnCheckedChanged(ToDoItem item)
         {
             _toDoItemStore.Update(item);
+        }
+
+        public ICommand NavigateToDetailsCommand => new Command<ToDoItem>(OnNavigateToDetails);
+
+        private async void OnNavigateToDetails(ToDoItem item)
+        {
+            if (item == null)
+                return;
+
+            // Pass the selected ToDoItem to the details page
+            await Application.Current.MainPage.Navigation.PushAsync(new ToDoDetailsPage(item));
         }
 
 

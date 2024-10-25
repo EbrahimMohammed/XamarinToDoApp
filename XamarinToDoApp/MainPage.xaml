@@ -31,6 +31,10 @@
                                 TextFontSize="10"
                                 VerticalOptions="Center" />
                             <Label Text="{Binding Text}" FontSize="20" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                            <Button 
+                        Text="Details" 
+                        Command="{Binding BindingContext.NavigateToDetailsCommand, Source={x:Reference ToDoList}}" 
+                        CommandParameter="{Binding .}" />
                             <ImageButton Source="delete.jpg"
                                 Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}"
                                 CommandParameter="{Binding .}"
