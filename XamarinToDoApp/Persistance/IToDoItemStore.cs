@@ -11,8 +11,8 @@ namespace XamarinToDoApp.Persistance
     {
         Task<IEnumerable<ToDoItem>> GetAll();
         
-        Task Add(ToDoItem contact);
         Task Delete(ToDoItem contact);
         Task Update(ToDoItem contact);
+        Task AddToDoItemWithDetails(ToDoItem item, ToDoItemDetails details);
     }
 }

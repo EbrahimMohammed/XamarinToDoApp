@@ -15,6 +15,8 @@ namespace XamarinToDoApp.Models
 
         public bool Completed { get; set; }
 
+        public int? ToDoItemDetailsId { get; set; }
+
         public ToDoItem()
         {
            

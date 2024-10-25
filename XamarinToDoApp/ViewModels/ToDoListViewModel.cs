@@ -50,8 +50,9 @@ namespace XamarinToDoApp.ViewModels
         void AddNewToDoItem()
         {
             var toDoItem = new ToDoItem { Completed = false, Text = NewToDoTextValue };
+            var details = new ToDoItemDetails { Details = toDoItem.Text };
             NewToDoTextValue = string.Empty; // Clear the Entry text
-            _toDoItemStore.Add(toDoItem);
+            _toDoItemStore.AddToDoItemWithDetails(toDoItem, details);
             ToDoItems.Add(toDoItem);
         }
 
