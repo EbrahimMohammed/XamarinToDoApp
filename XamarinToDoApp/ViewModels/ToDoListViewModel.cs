@@ -50,7 +50,7 @@ namespace XamarinToDoApp.ViewModels
         void AddNewToDoItem()
         {
             var toDoItem = new ToDoItem { Completed = false, Text = NewToDoTextValue };
-            var details = new ToDoItemDetails { Details = toDoItem.Text };
+            var details = new ToDoItemDetails { Details = toDoItem.Text, DueDate = DateTime.Now.AddDays(1), DueTime = DateTime.Now.TimeOfDay };
             NewToDoTextValue = string.Empty; // Clear the Entry text
             _toDoItemStore.AddToDoItemWithDetails(toDoItem, details);
             ToDoItems.Add(toDoItem);
@@ -95,7 +95,6 @@ namespace XamarinToDoApp.ViewModels
         {
             if (item == null)
                 return;
-
             // Pass the selected ToDoItem to the details page
             await Application.Current.MainPage.Navigation.PushAsync(new ToDoDetailsPage(item));
         }

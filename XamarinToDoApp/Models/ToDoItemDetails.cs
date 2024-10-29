@@ -18,5 +18,10 @@ namespace XamarinToDoApp.Models
         [Ignore]
         public ToDoItem ToDoItem { get; set; }
 
+        public DateTime DueDate { get; set; }
+
+        public TimeSpan DueTime { get; set; }
+
+
     }
 }

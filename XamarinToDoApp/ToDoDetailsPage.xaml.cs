@@ -16,22 +16,25 @@ namespace XamarinToDoApp
 	public partial class ToDoDetailsPage : ContentPage
 	{
         private ToDoDetailsViewModel _viewModel;
-
+        private ToDoItem _item;
         public ToDoDetailsPage(ToDoItem item)
         {
+            _item = item;
             InitializeComponent();
             var toDoItemDetailsStore = new SqlLiteToDoItemDetailsStore(DependencyService.Get<ISQLiteDb>());
 
             _viewModel = new ToDoDetailsViewModel(toDoItemDetailsStore);
             BindingContext = _viewModel;
 
-            // Call the async initialization method
-            InitializeViewModelAsync(item);
         }
 
-        private async void InitializeViewModelAsync(ToDoItem item)
+        protected override async void OnAppearing()
         {
-            await _viewModel.InitializeAsync(item);
+            base.OnAppearing();
+
+            await _viewModel.InitializeAsync(_item);
         }
+
+        
     }
 }

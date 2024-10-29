@@ -11,10 +11,33 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding ToDoItemDetails.Details}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="20">
+            <Label Text="{Binding ToDoItemDetails.ToDoItem.Text}"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   TextColor="deeppink"
+                   VerticalOptions="Center" 
+                    />
+
+            <Editor Text="{Binding ToDoItemDetails.Details}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    AutoSize="TextChanges"
+                    Placeholder="Enter details here"
+                    HeightRequest="100"/>
+
+            <Label Text="Due Date" FontAttributes="Bold" />
+            <DatePicker Date="{Binding DueDate}" MinimumDate="{Binding Today}" />
+
+            <!-- TimePicker for due time -->
+            <Label Text="Due Time" FontAttributes="Bold" />
+            <TimePicker Time="{Binding DueTime}"/>
+
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="deeppink"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
