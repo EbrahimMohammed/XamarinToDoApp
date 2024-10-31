@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Plugin.LocalNotification;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamarinToDoApp.Models;
 using XamarinToDoApp.Persistance;
+using XamarinToDoApp.Services;
 
 namespace XamarinToDoApp.ViewModels
 {
@@ -13,10 +15,12 @@ namespace XamarinToDoApp.ViewModels
         public DateTime Today => DateTime.Today;
 
         private readonly IToDoItemDetailsStore _toDoItemDetailsStore;
+        private readonly INotificationsService _notificationsService;
 
-        public ToDoDetailsViewModel(IToDoItemDetailsStore toDoItemDetailsStore)
+        public ToDoDetailsViewModel(IToDoItemDetailsStore toDoItemDetailsStore, INotificationsService notificationsService)
         {
             _toDoItemDetailsStore = toDoItemDetailsStore;
+            _notificationsService = notificationsService;
         }
 
         public ToDoDetailsViewModel() { }
@@ -111,7 +115,39 @@ namespace XamarinToDoApp.ViewModels
         private async void OnSaveDetails()
         {
             await _toDoItemDetailsStore.Update(ToDoItemDetails);
+            await _notificationsService.CancelNotification(ToDoItemDetails.ToDoItemId);//Ensure if notification created before, delete it
+            await ScheduleTaskNotification();
             await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
         }
+
+        public async Task ScheduleTaskNotification()
+        {
+           
+                // Combine DueDate and DueTime to create the notification date
+                DateTime notifyDateTime = new DateTime(
+                    ToDoItemDetails.DueDate.Year,
+                    ToDoItemDetails.DueDate.Month,
+                    ToDoItemDetails.DueDate.Day,
+                    DueTime.Hours,
+                    DueTime.Minutes,
+                    DueTime.Seconds
+                );
+
+                
+                if (notifyDateTime > DateTime.Now.AddMinutes(1))
+                {
+                // Schedule the notification 1 minute before the due time
+                DateTime scheduleTime = notifyDateTime.AddMinutes(-1);
+                var vv = DateTime.Now.AddSeconds(10);
+                await _notificationsService.ScheduleNotification(
+                        id: ToDoItemDetails.ToDoItemDetailsId, 
+                        title: "Task Reminder",
+                        description: $"Reminder for task: {ToDoItemDetails.ToDoItem.Text}",
+                        notifyTime: scheduleTime 
+                    );
+                }
+            
+        }
+
     }
 }

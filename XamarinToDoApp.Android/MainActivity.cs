@@ -4,6 +4,9 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.Platform.Droid;
+using XamarinToDoApp.Constants;
 
 namespace XamarinToDoApp.Droid
 {
@@ -13,7 +16,12 @@ namespace XamarinToDoApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            NotificationCenter.CreateNotificationChannel(new NotificationChannelRequest
+            {
+                Id = NotificationsConstants.HighImportanceChannelId,
+                Name = NotificationsConstants.HighImportanceChannelName,
+                Importance = NotificationImportance.High // High importance for pop-up notifications
+            });
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinToDoApp.Models;
 using XamarinToDoApp.Persistance;
+using XamarinToDoApp.Services;
 using XamarinToDoApp.ViewModels;
 
 namespace XamarinToDoApp
@@ -23,7 +24,7 @@ namespace XamarinToDoApp
             InitializeComponent();
             var toDoItemDetailsStore = new SqlLiteToDoItemDetailsStore(DependencyService.Get<ISQLiteDb>());
 
-            _viewModel = new ToDoDetailsViewModel(toDoItemDetailsStore);
+            _viewModel = new ToDoDetailsViewModel(toDoItemDetailsStore, DependencyService.Get<INotificationsService>());
             BindingContext = _viewModel;
 
         }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Plugin.LocalNotification;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinToDoApp.Persistance;
+using XamarinToDoApp.Services;
 using XamarinToDoApp.ViewModels;
 
 namespace XamarinToDoApp
@@ -10,10 +12,15 @@ namespace XamarinToDoApp
     {
         public App()
         {
+            #region dependancy injection
+            DependencyService.Register<INotificationsService, NotificationService>();
             var toDoItemStore = new SqlLiteToDoItemStore(DependencyService.Get<ISQLiteDb>());
+            #endregion
+
             ViewModel = new ToDoListViewModel(toDoItemStore);
 
             InitializeComponent();
+
 
             MainPage = new NavigationPage(new MainPage());
 
