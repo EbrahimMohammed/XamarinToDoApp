@@ -82,12 +82,6 @@
                             Command="{Binding BindingContext.NavigateToDetailsCommand, Source={x:Reference ToDoList}}" 
                             CommandParameter="{Binding .}" 
                             Style="{StaticResource DetailsButtonStyle}" />
-                            <Button 
-                                Text="Delete"
-                                Command="{Binding Path=BindingContext.RemoveToDoCommand, Source={x:Reference ToDoList}}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="End" VerticalOptions="Center"
-                                Style="{StaticResource DeleteButtonStyle}"        />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

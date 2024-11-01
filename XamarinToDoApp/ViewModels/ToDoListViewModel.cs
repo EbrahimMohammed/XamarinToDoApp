@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using XamarinToDoApp.Models;
 using XamarinToDoApp.Persistance;
+using XamarinToDoApp.Services;
 
 namespace XamarinToDoApp.ViewModels
 {
@@ -16,14 +17,15 @@ namespace XamarinToDoApp.ViewModels
     {
 
         private IToDoItemStore _toDoItemStore;
-
+        private INotificationsService _notificationsService;
 
         public ObservableCollection<ToDoItem> ToDoItems { get; private set; }
         = new ObservableCollection<ToDoItem>();
 
-        public ToDoListViewModel(IToDoItemStore toDoItemStore)
+        public ToDoListViewModel(IToDoItemStore toDoItemStore, INotificationsService notificationsService)
         {
             _toDoItemStore = toDoItemStore;
+            _notificationsService = notificationsService;
         }
 
         public ToDoListViewModel()
@@ -63,7 +65,7 @@ namespace XamarinToDoApp.ViewModels
             ToDoItem itemToRemove = o as ToDoItem;
             ToDoItems.Remove(itemToRemove);
             _toDoItemStore.Delete(itemToRemove);
-
+            _notificationsService.CancelNotification(itemToRemove.Id); // ensure notification is deleted
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -87,6 +89,10 @@ namespace XamarinToDoApp.ViewModels
         private void OnCheckedChanged(ToDoItem item)
         {
             _toDoItemStore.Update(item);
+            if (item.Completed)
+            {
+                _notificationsService.CancelNotification(item.Id); // ensure notification is deleted when task marked as completed
+            }
         }
 
         public ICommand NavigateToDetailsCommand => new Command<ToDoItem>(OnNavigateToDetails);

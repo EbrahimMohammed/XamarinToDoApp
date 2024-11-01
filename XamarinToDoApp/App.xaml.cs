@@ -17,7 +17,7 @@ namespace XamarinToDoApp
             var toDoItemStore = new SqlLiteToDoItemStore(DependencyService.Get<ISQLiteDb>());
             #endregion
 
-            ViewModel = new ToDoListViewModel(toDoItemStore);
+            ViewModel = new ToDoListViewModel(toDoItemStore, DependencyService.Get<INotificationsService>());
 
             InitializeComponent();
 

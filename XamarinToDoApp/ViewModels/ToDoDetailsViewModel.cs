@@ -138,7 +138,6 @@ namespace XamarinToDoApp.ViewModels
                 {
                 // Schedule the notification 1 minute before the due time
                 DateTime scheduleTime = notifyDateTime.AddMinutes(-1);
-                var vv = DateTime.Now.AddSeconds(10);
                 await _notificationsService.ScheduleNotification(
                         id: ToDoItemDetails.ToDoItemDetailsId, 
                         title: "Task Reminder",
