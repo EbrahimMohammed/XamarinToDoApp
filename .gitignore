@@ -3,3 +3,5 @@ obj/
 *.userprefs
 .packages
 .vs
+/XamarinToDoApp/Properties/PublishProfiles/FolderProfile.pubxml
+/XamarinToDoApp/Properties/PublishProfiles/FolderProfile.pubxml.user
