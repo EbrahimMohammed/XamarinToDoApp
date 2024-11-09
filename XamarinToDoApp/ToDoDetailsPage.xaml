@@ -39,11 +39,6 @@
                     HorizontalOptions="Center"
                     BackgroundColor="deeppink"/>  
             
-            <Button Text="Save"
-                    Command="{Binding NN}"
-                    VerticalOptions="End"
-                    HorizontalOptions="Center"
-                    BackgroundColor="deeppink"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
